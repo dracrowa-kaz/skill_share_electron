@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link href="./index.css" rel="stylesheet">
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+  <script src='./lib/jquery-3.1.0.min.js'></script> 
+  <title>SKILL - SHARE</title>
+</head>
+<body>
+	<script src="index.js"></script>
+	<script>if (window.module) module = window.module;</script>
+	<script type="text/javascript">
+	$(function() {
+
+	    //ファイルの一意になる数
+	    var fileNumber = 0;
+
+	    $("#btn_folder").click(function() {
+	    	showOpenDialog();
+	    });
+
+	    function readFolderOrFile(path){
+			console.log(path);
+			console.log(fs);
+			fs.readdir(path, function (err, files) { 
+				if (!err){
+					for(var i = 0; i < files.length; i++){
+						var file = files[i];
+						var pathToFile = path + "/" + file;
+
+						$("#ul_file_list").prepend('<li id="li_file' + fileNumber + '" value="' + pathToFile + '">' + pathToFile +'</li>');
+
+						$("#li_file" + fileNumber).click(function(){
+							val = $(this).attr("value");　// valueの取得
+							readSelectedFile(val);
+						});
+
+						fileNumber++;
+
+						readFolderOrFile(path + "/" + file);
+
+/*						fs.readFile(path + "/" + files[i], 'utf8' , (err, data) => {
+						  if (err) {
+							readFolderOrFile(path + "/" + file);
+						  }
+						});*/
+					}
+				} 
+				else
+					throw err; 
+			});
+	    }
+
+	    function readSelectedFile(path){
+	    	$("#div_method_list").empty();
+			$("#div_source").empty();
+
+			fs.readFile(path, 'utf8' , (err, data) => {
+			  if (err) throw err;
+			  var splitData = data.split( "\n" );
+
+			  for(var i = 0; i < splitData.length ; i++){
+				  if(splitData[i].indexOf('def ') != -1){
+				  	var methodName = splitData[i].slice(splitData[i].indexOf('def ') + 4);
+				  	$("#div_method_list").prepend('<li class="li_method">' + methodName +'</li>');
+				  }
+			  }
+
+			  $("#div_source").prepend("<xmp>" + data + "</xmp>");
+
+			});
+	    }
+	    
+		function showOpenDialog(){
+			$("#ul_file_list").empty();
+			var dialogResult= dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']});
+			var path = dialogResult[0];
+			readFolderOrFile(path);
+		}
+	});
+	</script>
+
+	<h1  class="text_center">Skill-share project</h1>
+	<p class="text_center">開発中</p>
+	<div id="btn_folder" class="button">
+	ここをクリックしてフォルダを選択してください
+	</div>
+	<br>
+	<div class="float_left margin_left">
+		<div><span style="background: #ccc; padding: 6px 10px; border-radius: 10px 10px 0 0; color: #ffffff; margin-left: 10px;">フォルダ</span></div>
+		<div class="scr_folder_list border_block">
+			<ul id="ul_file_list"></ul>
+		</div>
+	</div>
+	<div class="float_left margin_left">
+		<div><span style="background: #ccc; padding: 6px 10px; border-radius: 10px 10px 0 0; color: #ffffff; margin-left: 10px;">メソッド</span></div>
+		<div class="scr_folder_list border_block">
+			<ul id="div_method_list"></ul>
+		</div>
+	</div>
+	<div class="float_left margin_left">
+		<div><span style="background: #ccc; padding: 6px 10px; border-radius: 10px 10px 0 0; color: #ffffff; margin-left: 10px;">ソース</span></div>
+		<div class="scr_folder_list border_block">
+			<div id="div_source"></div>
+		</div>
+	</div>
+</body>
+</html>

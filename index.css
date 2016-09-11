@@ -1,0 +1,113 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);
+
+/*body {
+    background-color: rgba(24, 24, 24, .7);
+    color: #fff;
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+}*/
+
+body {
+	font-family: 'Noto Sans JP', sans-serif;
+	font-size: 100%;
+}
+
+nav {
+    width: 400px;
+    background: #f7f6c9;
+    padding: 15px;
+}
+
+.left {
+    margin-right: auto;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+.right {
+    margin-left: auto;
+}
+
+.text_center{
+	text-align: center;
+}
+
+.scr_folder_list{
+  overflow: scroll;   /* スクロール表示 */ 
+  width: 300px;
+  height: 300px;
+  background-color: red;
+}
+
+.border_block {
+    padding: 10 0 10 0px;
+    background: #fff;
+    border: 1px #ccc solid;
+    box-shadow: 0 2px 3px 0 #ddd;
+    -moz-box-shadow: 0 2px 3px 0 #ddd;
+    -webkit-box-shadow: 0 2px 3px 0 #ddd;
+    font-size: 70%;
+}
+
+.float_left{
+    float: left;
+}
+
+.margin_top{
+    margin-top: 15px;
+}
+
+.margin_left{
+    margin-left: 15px;
+}
+
+.button {
+    position: relative;
+    z-index: 2;
+    background-color: #333;
+    border: 2px solid #333;
+    color: #fff;
+    line-height: 50px;
+}
+.button:hover {
+    background-color: #fff;
+    border-color: #59b1eb;
+    color: #59b1eb;
+}
+.button::before,
+.button::after {
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #333;
+}
+.button::before {
+    right: 0;
+}
+.button::after {
+    left: 0;
+}
+.button:hover::before,
+.button:hover::after {
+    width: 0;
+    background-color: #59b1eb;
+}
+.button{
+    text-align: center;
+}
